@@ -1,3 +1,5 @@
+#---------------------------------------- Created By Mr.Suthinan Musitmani ----------------------------------------
+
 import numpy as np
 import matplotlib.pyplot as plt
 import h5py
@@ -348,9 +350,9 @@ def linear_activation_forward(A_prev, W, b, activation):
 
 #---------------------------------------- Activation Forward For L-layer ----------------------------------------
 
-def L_model_forward(X, parameters):
+def L_model_forward(X, parameters, l_activation = "relu", o_activation = "sigmoid"):
     """
-    Implement forward propagation for the [LINEAR->RELU]*(L-1)->LINEAR->SIGMOID computation
+    Implement forward propagation for the [LINEAR->L-Activation]*(L-1)->LINEAR->Output-Activation computation
     
     Arguments:
     X -- data, numpy array of shape (input size, number of examples)
@@ -370,11 +372,11 @@ def L_model_forward(X, parameters):
     # Implement [LINEAR -> RELU]*(L-1). Add "cache" to the "caches" list.
     for l in range(1, L):
         A_prev = A 
-        A, cache = linear_activation_forward(A_prev, parameters['W' + str(l)], parameters['b' + str(l)], activation = "relu")
+        A, cache = linear_activation_forward(A_prev, parameters['W' + str(l)], parameters['b' + str(l)], activation = l_activation)
         caches.append(cache)
     
     # Implement LINEAR -> SIGMOID. Add "cache" to the "caches" list.
-    AL, cache = linear_activation_forward(A, parameters['W' + str(L)], parameters['b' + str(L)], activation = "sigmoid")
+    AL, cache = linear_activation_forward(A, parameters['W' + str(L)], parameters['b' + str(L)], activation = o_activation)
     caches.append(cache)
     
     assert(AL.shape == (1,X.shape[1]))
