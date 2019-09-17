@@ -14,7 +14,7 @@ the reason I would like to create this repository is purely for academic use (in
 
 ### 1. Neural Network and Deep Learning
 * Week 1
-	* [Quiz 1](https://github.com/HeroKillerEver/coursera-deep-learning/blob/master/Neural%20Networks%20and%20Deep%20Learning/week1%20quiz.md)
+	* [Quiz 1](https://github.com/potaesm/Coursera-Deep-Learning/blob/master/Neural%20Networks%20and%20Deep%20Learning/week1%20quiz.md)
 	* [Logistic Regression as a Neural Network](https://github.com/HeroKillerEver/coursera-deep-learning/tree/master/Neural%20Networks%20and%20Deep%20Learning/Logistic%20Regression%20as%20a%20Neural%20Network)
 
 * Week 2
