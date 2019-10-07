@@ -122,6 +122,9 @@ def create_h5(image_height=64, image_width=64, image_depth=3, file_type='', base
     train_shape = (len(train_addrs), image_height, image_width, image_depth)
     test_shape = (len(test_addrs), image_height, image_width, image_depth)
 
+    if not os.path.exists('datasets/'):
+        os.makedirs('datasets/')
+
     train_hdf5_path = 'datasets/train_dataset.h5'
     test_hdf5_path = 'datasets/test_dataset.h5'
 
@@ -348,12 +351,12 @@ def linear_function_backward(dA, cache):
 
 #---------------------------------------- Load Data ----------------------------------------
 
-def load_data():
-    train_dataset = h5py.File('datasets/train_dataset.h5', "r")
+def load_data(base_path='datasets/'):
+    train_dataset = h5py.File(base_path + 'train_dataset.h5', "r")
     train_set_x_orig = np.array(train_dataset["train_set_x"][:]) # your train set features
     train_set_y_orig = np.array(train_dataset["train_set_y"][:]) # your train set labels
 
-    test_dataset = h5py.File('datasets/test_dataset.h5', "r")
+    test_dataset = h5py.File(base_path + 'test_dataset.h5', "r")
     test_set_x_orig = np.array(test_dataset["test_set_x"][:]) # your test set features
     test_set_y_orig = np.array(test_dataset["test_set_y"][:]) # your test set labels
 
