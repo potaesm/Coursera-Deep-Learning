@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import h5py
 import glob
 import cv2
+import os
 from numpy import expand_dims
 from keras.preprocessing.image import img_to_array
 from keras.preprocessing.image import ImageDataGenerator
@@ -18,10 +19,22 @@ def image_augmentation(image_height=64, image_width=64, file_type='', base_path=
     train_base_path = base_path + 'train_set/'
     test_base_path = base_path + 'test_set/'
 
+    train_save_path = save_path + 'train_set/'
+    test_save_path = save_path + 'test_set/'
+
     true_train_addrs = glob.glob(train_base_path + true_label + '/*.' + file_type)
     false_train_addrs = glob.glob(train_base_path + false_label + '/*.' + file_type)
     true_test_addrs = glob.glob(test_base_path + true_label + '/*.' + file_type)
     false_test_addrs = glob.glob(test_base_path + false_label + '/*.' + file_type)
+
+    if not os.path.exists(train_save_path + true_label):
+        os.makedirs(train_save_path + true_label)
+    if not os.path.exists(train_save_path + false_label):
+        os.makedirs(train_save_path + false_label)
+    if not os.path.exists(test_save_path + true_label):
+        os.makedirs(test_save_path + true_label)
+    if not os.path.exists(test_save_path + false_label):
+        os.makedirs(test_save_path + false_label)
 
     datagen = ImageDataGenerator(rotation_range=20,zoom_range=0.15,width_shift_range=0.2,height_shift_range=0.2,shear_range=0.15,horizontal_flip=True,fill_mode="nearest")
 
@@ -34,7 +47,7 @@ def image_augmentation(image_height=64, image_width=64, file_type='', base_path=
         true_train_samples = expand_dims(true_train_data, 0)
 
         true_train_it = datagen.flow(true_train_samples, save_to_dir=save_path + 'train_set/' + true_label, save_prefix='aug', save_format=file_type, batch_size=32)
-        for j in range(times):
+        for j in range(times - 1):
             true_train_it.next()
 
     for i in range(len(false_train_addrs)):
@@ -46,7 +59,7 @@ def image_augmentation(image_height=64, image_width=64, file_type='', base_path=
         false_train_samples = expand_dims(false_train_data, 0)
 
         false_train_it = datagen.flow(false_train_samples, save_to_dir=save_path + 'train_set/' + false_label, save_prefix='aug', save_format=file_type, batch_size=32)
-        for j in range(times):
+        for j in range(times - 1):
             false_train_it.next()
 
     for i in range(len(true_test_addrs)):
@@ -58,7 +71,7 @@ def image_augmentation(image_height=64, image_width=64, file_type='', base_path=
         true_test_samples = expand_dims(true_test_data, 0)
 
         true_test_it = datagen.flow(true_test_samples, save_to_dir=save_path + 'test_set/' + true_label, save_prefix='aug', save_format=file_type, batch_size=32)
-        for j in range(times):
+        for j in range(times - 1):
             true_test_it.next()
 
     for i in range(len(false_test_addrs)):
@@ -70,8 +83,10 @@ def image_augmentation(image_height=64, image_width=64, file_type='', base_path=
         false_test_samples = expand_dims(false_test_data, 0)
 
         false_test_it = datagen.flow(false_test_samples, save_to_dir=save_path + 'test_set/' + false_label, save_prefix='aug', save_format=file_type, batch_size=32)
-        for j in range(times):
+        for j in range(times - 1):
             false_test_it.next()
+
+    return
 
 #---------------------------------------- H5 Converter Function ----------------------------------------
 
